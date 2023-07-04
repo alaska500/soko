@@ -26,7 +26,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run py
       run: |
-        python data_center.py
+        python kzz_min_quote.py
     - name: Push changes
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
