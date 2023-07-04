@@ -1,16 +1,23 @@
 import efinance as ef
 import os
+import sys
+import chinese_calendar
 from datetime import datetime
 
+now = datetime.now()
 os.environ['NO_PROXY'] = '*'
 
 
 def download_kzz_min():
+    if not chinese_calendar.is_workday(now) or now.isoweekday() > 5:
+        sys.exit()
+
+    today = now.strftime("%Y%m%d")
+
     # 获取可转债实时行情
     kzz_spot = ef.bond.get_realtime_quotes()
     kzz_spot_top = kzz_spot[:100].copy()
 
-    today = datetime.now().strftime("%Y%m%d")
 
     save_dir = f"./data/{today}/min"
     if not os.path.exists(save_dir):
