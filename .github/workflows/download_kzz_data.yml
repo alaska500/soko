@@ -1,0 +1,33 @@
+name: download_kzz_data
+
+on: 
+  push:
+  schedule:
+    - cron: '0 9 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: szenius/set-timezone@v1.0
+      with:
+        timezoneLinux: "Asia/Shanghai"
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.7
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Run py
+      run: |
+        python data_center.py
+    - name: Push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: ooooooo
